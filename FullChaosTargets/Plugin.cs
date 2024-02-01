@@ -2,30 +2,27 @@
 {
      using Exiled.API.Features;
 
-    public class Plugin : Plugin<Config>
-    {
-          public override string Name => "ChaosTargets";
+     public class Plugin : Plugin<Config>
+     {
+          public override string Name => "ChaosTargetsCounter";
           public override string Prefix => Name;
           public override string Author => "@misfiy";
-          
-          public static Plugin Instance;
+          public override Version Version => new(1, 0, 1);
 
-          private EventHandler handler;
+          public static Plugin Instance { get; set; } = null!;
+
+          private EventHandler handler { get; set; } = null!;
 
           public override void OnEnabled()
           {
                Instance = this;
                handler = new();
 
-               Exiled.Events.Handlers.Server.RespawningTeam += handler.OnRespawningTeam;
-
                base.OnEnabled();
           }
 
           public override void OnDisabled()
           {
-               Exiled.Events.Handlers.Server.RespawningTeam -= handler.OnRespawningTeam;
-
                handler = null!;
                Instance = null!;
                base.OnDisabled();
